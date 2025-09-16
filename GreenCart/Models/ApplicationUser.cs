@@ -22,7 +22,7 @@ namespace GreenCart.Models
 
         [Required]
         public string Role { get; set; } // "Seller" or "Buyer"
-
+        //test
         // Navigation properties from the 4-model design
         public virtual ICollection<Product> Products { get; set; } = new List<Product>();
         public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
