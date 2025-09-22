@@ -148,3 +148,7 @@ C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\obj\Debug\netcoreapp3.1\
 C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\obj\Debug\netcoreapp3.1\GreenCart.dll
 C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\obj\Debug\netcoreapp3.1\GreenCart.pdb
 C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\obj\Debug\netcoreapp3.1\GreenCart.genruntimeconfig.cache
+C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\bin\Debug\netcoreapp3.1\AutoMapper.dll
+C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
+C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs

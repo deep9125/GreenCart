@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GreenCart.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250922131739_GreenCart")]
+    [Migration("20250922171107_GreenCart")]
     partial class GreenCart
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

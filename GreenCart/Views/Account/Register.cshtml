@@ -1,0 +1,52 @@
+﻿@model GreenCart.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Register a New Account</h1>
+<p>Join our community of creators and shoppers.</p>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Register" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            
+            <div class="form-group mb-3">
+                <label asp-for="FirstName" class="form-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="LastName" class="form-label"></label>
+                <input asp-for="LastName" class="form-control" />
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" />
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Role" class="form-label"></label>
+                <select asp-for="Role" class="form-select">
+                    <option value="">-- Select a Role --</option>
+                    <option value="Buyer">I want to Buy</option>
+                    <option value="Seller">I want to Sell</option>
+                </select>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" class="form-control" />
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ConfirmPassword" class="form-label"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
