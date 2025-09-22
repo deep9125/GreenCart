@@ -29,6 +29,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+
                         @if (userRole != "Seller")
                         {
                             <li class="nav-item">
@@ -45,12 +46,16 @@
                                     <a class="nav-link text-info" asp-controller="Seller" asp-action="Dashboard">My Dashboard</a>
                                 </li>
                             }
-                            else
+                            else 
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-info" asp-controller="Orders" asp-action="History">My Orders</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Cart" asp-action="Index">Cart</a>
+                                </li>
                             }
+
                             <li class="nav-item">
                                 <form class="form-inline" asp-controller="Account" asp-action="Logout" method="post">
                                     <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>

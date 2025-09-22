@@ -26,5 +26,6 @@ namespace GreenCart.Models
         // Navigation properties from the 4-model design
         public virtual ICollection<Product> Products { get; set; } = new List<Product>();
         public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+        public virtual Cart Cart { get; set; }
     }
 }

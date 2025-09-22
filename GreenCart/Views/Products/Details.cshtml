@@ -32,11 +32,13 @@
                     <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger btn-lg">
                         <i class="bi bi-trash"></i> Delete Listing
                     </a>
+                    
                 </div>
             }
             else
             {
-                <form asp-controller="Cart" asp-action="AddToCart" method="post" class="d-grid">
+                <form asp-controller="Cart" asp-action="AddItem" method="post" class="d-grid">
+                    <input type="hidden" name="userId" value="@userId">
                     <input type="hidden" name="productId" value="@Model.Id" />
                     <button type="submit" class="btn btn-success btn-lg">
                         <i class="bi bi-cart-plus"></i> Add to Cart

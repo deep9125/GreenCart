@@ -50,7 +50,7 @@ namespace GreenCart.Controllers
                 var product = _mapper.Map<Product>(viewModel);
                 product.SellerId = userId.Value;
                 _productRepository.Add(product);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details) ,new { id = product.Id });
             }
             return View(viewModel);
         }
@@ -92,7 +92,7 @@ namespace GreenCart.Controllers
                 }
                 _mapper.Map(viewModel, product);
                 _productRepository.Update(product);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), new { id = product.Id });
             }
             return View(viewModel);
         }
@@ -127,7 +127,7 @@ namespace GreenCart.Controllers
                 return Forbid();
             }
             _productRepository.Delete(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Dashboard", "Seller");
         }
     }
 }

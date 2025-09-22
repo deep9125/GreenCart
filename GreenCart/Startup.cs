@@ -35,6 +35,7 @@ namespace GreenCart
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+            services.AddScoped<ICartRepository,CartRepository>();
             var config = new AutoMapper.MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new MappingProfile());

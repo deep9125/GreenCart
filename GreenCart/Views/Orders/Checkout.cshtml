@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Checkout";
+}
+
+<h1>Checkout</h1>
+<p>Please confirm your shipping address to complete the order.</p>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Checkout" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="form-group mb-3">
+                <label for="shippingAddress" class="form-label fw-bold">Shipping Address</label>
+                <textarea name="shippingAddress" class="form-control" rows="4" required placeholder="Enter your full address..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-success btn-lg">Place Order</button>
+        </form>
+    </div>
+</div>

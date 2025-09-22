@@ -158,3 +158,6 @@ C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\obj\Debug\netcoreapp3.1\
 C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\obj\Debug\netcoreapp3.1\Razor\Views\Products\Edit.cshtml.g.cs
 C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\obj\Debug\netcoreapp3.1\Razor\Views\Products\Index.cshtml.g.cs
 C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\obj\Debug\netcoreapp3.1\Razor\Views\Seller\Dashboard.cshtml.g.cs
+C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\obj\Debug\netcoreapp3.1\Razor\Views\Cart\Index.cshtml.g.cs
+C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\obj\Debug\netcoreapp3.1\Razor\Views\Orders\Checkout.cshtml.g.cs
+C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\obj\Debug\netcoreapp3.1\Razor\Views\Orders\History.cshtml.g.cs
