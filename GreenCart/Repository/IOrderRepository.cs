@@ -7,5 +7,8 @@ namespace GreenCart.Repository
     {
         void Add(Order order);
         IEnumerable<Order> GetOrdersByBuyerId(int buyerId);
+        IEnumerable<Order> GetOrdersBySellerId(int sellerId);
+        Order? GetById(int id);      
+        void Update(Order order);
     }
 }

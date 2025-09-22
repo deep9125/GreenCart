@@ -1,0 +1,58 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@model GreenCart.Models.Product
+@{
+    ViewData["Title"] = Model.Name;
+}
+<h1>@Model.Name</h1>
+<div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <img src="@(Model.ImageUrl ?? "https://placehold.co/600x400/66cc99/FFFFFF?text=GreenCart")" alt="@Model.Name" class="img-fluid rounded shadow-sm" />
+        </div>
+        <div class="col-md-6">
+            <h4>Sold by: @Model.Seller.FirstName</h4>
+            <p><strong>Category:</strong> @Model.Category</p>
+            <p>@Model.Description</p>
+            <h3 class="text-primary">@Model.Price.ToString("C")</h3>
+            <p>In Stock: @Model.StockQuantity</p>
+            <hr />
+            @{
+                var userId = HttpContextAccessor.HttpContext.Session.GetInt32("UserId");
+                var userRole = HttpContextAccessor.HttpContext.Session.GetString("UserRole");
+            }
+            @if (userRole == "Seller" && Model.SellerId == userId)
+            {
+                <div class="d-grid gap-2">
+                    <h5 class="text-muted">Seller Actions</h5>
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning btn-lg">
+                        <i class="bi bi-pencil-square"></i> Edit Listing
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger btn-lg">
+                        <i class="bi bi-trash"></i> Delete Listing
+                    </a>
+                </div>
+            }
+            else
+            {
+                <form asp-controller="Cart" asp-action="AddToCart" method="post" class="d-grid">
+                    <input type="hidden" name="productId" value="@Model.Id" />
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <i class="bi bi-cart-plus"></i> Add to Cart
+                    </button>
+                </form>
+            }
+        </div>
+    </div>
+</div>
+<div class="mt-4">
+    @if (userRole == "Seller")
+    {
+        <a asp-controller="Seller" asp-action="Dashboard" class="btn btn-outline-secondary">← Back to My Dashboard</a>
+    }
+    else
+    {
+        <a asp-controller="Products" asp-action="Index" class="btn btn-outline-secondary">← Back to Marketplace</a>
+    }
+</div>

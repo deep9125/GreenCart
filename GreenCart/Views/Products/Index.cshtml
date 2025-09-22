@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@model IEnumerable<GreenCart.Models.Product>
+@{
+    ViewData["Title"] = "Marketplace";
+}
+<h1>Marketplace</h1>
+@{
+    var userRole = HttpContextAccessor.HttpContext.Session.GetString("UserRole");
+}
+
+@if (userRole == "Seller")
+{
+    <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading">This is the Buyer's Marketplace!</h4>
+        <p>This page is for customers to browse and shop. To manage your own products, please go to your personal dashboard.</p>
+        <hr>
+        <a class="btn btn-info" asp-controller="Seller" asp-action="Dashboard">Go to My Seller Dashboard</a>
+    </div>
+}
+else
+{
+    <p>Browse all the unique products from our talented creators.</p>
+    <hr />
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <img src="@(item.ImageUrl ?? "https://placehold.co/600x400/66cc99/FFFFFF?text=GreenCart")" class="card-img-top" style="height:200px; object-fit:cover;" alt="@item.Name">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text"><strong>@item.Price.ToString("C")</strong></p>
+                        <p class="card-text"><small class="text-muted">Sold by: @item.Seller.FirstName</small></p>
+                    </div>
+                    <div class="card-footer bg-transparent border-top-0">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                                <input type="hidden" name="productId" value="@item.Id" />
+                                <button type="submit" class="btn btn-sm btn-success">
+                                    <i class="bi bi-cart-plus"></i> Add to Cart
+                                </button>
+                            </form>
+
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

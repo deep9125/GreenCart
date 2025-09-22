@@ -152,3 +152,9 @@ C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\bin\Debug\netcoreapp3.1\
 C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
 C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
+C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\obj\Debug\netcoreapp3.1\Razor\Views\Products\Create.cshtml.g.cs
+C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\obj\Debug\netcoreapp3.1\Razor\Views\Products\Delete.cshtml.g.cs
+C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\obj\Debug\netcoreapp3.1\Razor\Views\Products\Details.cshtml.g.cs
+C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\obj\Debug\netcoreapp3.1\Razor\Views\Products\Edit.cshtml.g.cs
+C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\obj\Debug\netcoreapp3.1\Razor\Views\Products\Index.cshtml.g.cs
+C:\Users\ratho\OneDrive\Desktop\WAD\GreenCart\GreenCart\obj\Debug\netcoreapp3.1\Razor\Views\Seller\Dashboard.cshtml.g.cs

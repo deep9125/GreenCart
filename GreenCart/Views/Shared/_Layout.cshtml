@@ -21,21 +21,22 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    @{
+                        var userId = HttpContextAccessor.HttpContext.Session.GetInt32("UserId");
+                        var userRole = HttpContextAccessor.HttpContext.Session.GetString("UserRole");
+                    }
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Marketplace</a>
-                        </li>
-                    </ul>
-
-                    <ul class="navbar-nav">
-                        @{
-                            var userId = HttpContextAccessor.HttpContext.Session.GetInt32("UserId");
-                            var userRole = HttpContextAccessor.HttpContext.Session.GetString("UserRole");
+                        @if (userRole != "Seller")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Marketplace</a>
+                            </li>
                         }
-
+                    </ul>
+                    <ul class="navbar-nav">
                         @if (userId != null)
                         {
                             @if (userRole == "Seller")
@@ -44,7 +45,7 @@
                                     <a class="nav-link text-info" asp-controller="Seller" asp-action="Dashboard">My Dashboard</a>
                                 </li>
                             }
-                            else 
+                            else
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-info" asp-controller="Orders" asp-action="History">My Orders</a>

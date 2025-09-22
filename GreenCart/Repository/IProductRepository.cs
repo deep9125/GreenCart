@@ -7,6 +7,7 @@ namespace GreenCart.Repository
     {
         IEnumerable<Product> GetAll();
         Product? GetById(int id);
+        IEnumerable<Product> GetBySellerId(int sellerId);
         void Add(Product product);
         void Update(Product product);
         void Delete(int id);

@@ -29,5 +29,25 @@ namespace GreenCart.Repository
                 .OrderByDescending(o => o.OrderDate)
                 .ToList();
         }
+        public IEnumerable<Order> GetOrdersBySellerId(int sellerId)
+        {
+            return _context.Orders
+                .Include(o => o.Buyer) 
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
+                .Where(o => o.OrderItems.Any(oi => oi.Product.SellerId == sellerId))
+                .OrderByDescending(o => o.OrderDate)
+                .ToList();
+        }
+        public Order? GetById(int id)
+        {
+            return _context.Orders.FirstOrDefault(o => o.Id == id);
+        }
+
+        public void Update(Order order)
+        {
+            _context.Orders.Update(order);
+            _context.SaveChanges();
+        }
     }
 }

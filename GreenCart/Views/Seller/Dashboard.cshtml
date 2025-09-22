@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@model GreenCart.ViewModels.SellerDashboardViewModel
+
+@{
+    ViewData["Title"] = "Seller Dashboard";
+    var userId = Context.Session.GetInt32("UserId");
+}
+<div class="card shadow-sm">
+    <div class="card-header"><h3 class="h5 mb-0">Incoming Orders</h3></div>
+    <div class="card-body">
+        @if (Model.IncomingOrders.Any())
+        {
+            @foreach (var order in Model.IncomingOrders)
+            {
+                <div class="card mb-3">
+                    <div class="card-header bg-light">
+                        <strong>Order #@order.Id</strong> | Placed: @order.OrderDate.ToShortDateString() | Buyer: @order.Buyer.FirstName
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Current Status:</strong> <span class="badge bg-primary">@order.Status</span></p>
+                        <table class="table table-sm">
+                            @foreach (var item in order.OrderItems.Where(oi => oi.Product.SellerId == userId))
+                            {
+                                <tr>
+                                    <td>@item.Product.Name</td>
+                                    <td>Quantity: @item.Quantity</td>
+                                </tr>
+                            }
+                        </table>
+
+                        <form asp-controller="Seller" asp-action="UpdateOrderStatus" method="post" class="mt-3">
+                            <input type="hidden" name="orderId" value="@order.Id" />
+                            <div class="input-group">
+                                <select name="status" class="form-select" asp-items="Html.GetEnumSelectList<GreenCart.Models.OrderStatus>()"></select>
+                                <button type="submit" class="btn btn-info">Update Status</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-center p-3">You have no incoming orders.</p>
+        }
+    </div>
+</div>

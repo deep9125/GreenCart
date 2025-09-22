@@ -35,7 +35,13 @@ namespace GreenCart.Repository
             _context.Products.Update(product);
             _context.SaveChanges();
         }
-
+        public IEnumerable<Product> GetBySellerId(int sellerId)
+        {
+            return _context.Products
+                .Where(p => p.SellerId == sellerId)
+                .Include(p => p.Seller)
+                .ToList();
+        }
         public void Delete(int id)
         {
             var product = GetById(id);
