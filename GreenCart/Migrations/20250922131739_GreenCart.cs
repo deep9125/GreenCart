@@ -16,7 +16,7 @@ namespace GreenCart.Migrations
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: false),
                     Role = table.Column<string>(nullable: false)
                 },
                 constraints: table =>

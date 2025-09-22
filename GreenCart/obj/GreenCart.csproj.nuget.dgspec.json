@@ -1,26 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "/Users/krish/Desktop/WAD/GreenCart/GreenCart/GreenCart.csproj": {}
+    "C:\\Users\\ratho\\OneDrive\\Desktop\\WAD\\GreenCart\\GreenCart\\GreenCart.csproj": {}
   },
   "projects": {
-    "/Users/krish/Desktop/WAD/GreenCart/GreenCart/GreenCart.csproj": {
+    "C:\\Users\\ratho\\OneDrive\\Desktop\\WAD\\GreenCart\\GreenCart\\GreenCart.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/krish/Desktop/WAD/GreenCart/GreenCart/GreenCart.csproj",
+        "projectUniqueName": "C:\\Users\\ratho\\OneDrive\\Desktop\\WAD\\GreenCart\\GreenCart\\GreenCart.csproj",
         "projectName": "GreenCart",
-        "projectPath": "/Users/krish/Desktop/WAD/GreenCart/GreenCart/GreenCart.csproj",
-        "packagesPath": "/Users/krish/.nuget/packages/",
-        "outputPath": "/Users/krish/Desktop/WAD/GreenCart/GreenCart/obj/",
+        "projectPath": "C:\\Users\\ratho\\OneDrive\\Desktop\\WAD\\GreenCart\\GreenCart\\GreenCart.csproj",
+        "packagesPath": "C:\\Users\\ratho\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ratho\\OneDrive\\Desktop\\WAD\\GreenCart\\GreenCart\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/krish/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\ratho\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
-          "/usr/local/share/dotnet/sdk/7.0.317/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -33,12 +38,22 @@
           "warnAsError": [
             "NU1605"
           ]
-        }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[3.1.10, )"
@@ -50,6 +65,12 @@
               "version": "[3.1.1, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
               "version": "[3.1.1, )"
             }
@@ -65,20 +86,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[3.1.10, 3.1.10]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.osx-x64",
-              "version": "[3.1.32, 3.1.32]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[3.1.0, 3.1.0]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -87,7 +94,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.317/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305\\RuntimeIdentifierGraph.json"
         }
       }
     }

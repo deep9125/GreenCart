@@ -18,7 +18,7 @@ namespace GreenCart.Models
         public string Email { get; set; }
 
         [Required]
-        public string PasswordHash { get; set; } // We will NEVER store plain text passwords
+        public string Password { get; set; } 
 
         [Required]
         public string Role { get; set; } // "Seller" or "Buyer"
