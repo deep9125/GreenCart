@@ -27,14 +27,15 @@ namespace GreenCart.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddToCart(int productId)
+        public IActionResult AddToCart(int productId, int quantity = 1)
         {
             var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
+            if (userId == null) return RedirectToAction("Login", "Account");
+            if (quantity < 1)
             {
-                return RedirectToAction("Login", "Account");
+                quantity = 1; 
             }
-            _cartRepository.AddItem(userId.Value, productId);
+            _cartRepository.AddItem(userId.Value, productId, quantity);
             return RedirectToAction("Index", "Products");
         }
         [HttpPost]

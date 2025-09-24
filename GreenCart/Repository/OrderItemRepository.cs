@@ -16,7 +16,9 @@ namespace GreenCart.Repository
 
         public OrderItem? GetById(int id)
         {
-            return _context.OrderItems.FirstOrDefault(oi => oi.Id == id);
+            return _context.OrderItems
+                .Include(oi => oi.Product)
+                .FirstOrDefault(oi => oi.Id == id);
         }
 
         public IEnumerable<OrderItem> GetByOrderId(int orderId)
@@ -25,6 +27,11 @@ namespace GreenCart.Repository
                 .Where(oi => oi.OrderId == orderId)
                 .Include(oi => oi.Product) 
                 .ToList();
+        }
+        public void Update(OrderItem item)
+        {
+            _context.OrderItems.Update(item);
+            _context.SaveChanges();
         }
     }
 }

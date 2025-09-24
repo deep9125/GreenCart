@@ -110,9 +110,6 @@ namespace GreenCart.Migrations
                     b.Property<string>("ShippingAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18, 2)");
 
@@ -140,6 +137,9 @@ namespace GreenCart.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

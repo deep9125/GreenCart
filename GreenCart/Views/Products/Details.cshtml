@@ -37,12 +37,13 @@
             }
             else
             {
-                <form asp-controller="Cart" asp-action="AddItem" method="post" class="d-grid">
-                    <input type="hidden" name="userId" value="@userId">
-                    <input type="hidden" name="productId" value="@Model.Id" />
-                    <button type="submit" class="btn btn-success btn-lg">
-                        <i class="bi bi-cart-plus"></i> Add to Cart
-                    </button>
+                <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                    <input type="hidden" name="productId" value="@Model.Id" /> <div class="input-group">
+                        <input type="number" name="quantity" class="form-control" value="1" min="1" max="@Model.StockQuantity"> 
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-cart-plus"></i>
+                        </button>
+                    </div>
                 </form>
             }
         </div>

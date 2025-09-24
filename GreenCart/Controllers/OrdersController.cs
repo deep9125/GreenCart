@@ -14,10 +14,12 @@ namespace GreenCart.Controllers
     {
         private readonly IOrderRepository _orderRepository;
         private readonly ICartRepository _cartRepository;
-        public OrdersController(IOrderRepository orderRepository, ICartRepository cartRepository)
+        private readonly IProductRepository _productRepository;
+        public OrdersController(IOrderRepository orderRepository, ICartRepository cartRepository, IProductRepository productRepository)
         {
             _orderRepository = orderRepository;
             _cartRepository = cartRepository;
+            _productRepository = productRepository;
         }
         public IActionResult History()
         {
@@ -45,25 +47,40 @@ namespace GreenCart.Controllers
         {
             var userId = HttpContext.Session.GetInt32("UserId");
             if (userId == null) return RedirectToAction("Login", "Account");
+
             var cart = _cartRepository.GetByUserId(userId.Value);
-            if (cart == null || !cart.Items.Any())
-            {
-                return RedirectToAction("Index", "Products");
-            }
+            if (cart == null || !cart.Items.Any()) return RedirectToAction("Index", "Products");
+
             var order = new Order
             {
                 BuyerId = userId.Value,
                 OrderDate = DateTime.Now,
                 ShippingAddress = shippingAddress,
-                Status = OrderStatus.Pending,
-                OrderItems = cart.Items.Select(cartItem => new OrderItem
-                {
-                    ProductId = cartItem.ProductId,
-                    Quantity = cartItem.Quantity,
-                    Price = cartItem.Product.Price 
-                }).ToList()
+                OrderItems = new List<OrderItem>()
             };
-            order.TotalAmount = order.OrderItems.Sum(oi => oi.Price * oi.Quantity);
+
+            decimal total = 0;
+            foreach (var cartItem in cart.Items)
+            {
+                var product = _productRepository.GetById(cartItem.ProductId);
+                if (product == null || product.StockQuantity < cartItem.Quantity)
+                {
+                    TempData["ErrorMessage"] = $"Sorry, there are only {product?.StockQuantity ?? 0} units of '{product?.Name}' available.";
+                    return RedirectToAction("Index", "Cart");
+                }
+                product.StockQuantity -= cartItem.Quantity;
+                _productRepository.Update(product);
+                var orderItem = new OrderItem
+                {
+                    ProductId = product.Id,
+                    Quantity = cartItem.Quantity,
+                    Status = OrderStatus.Pending,
+                    Price = product.Price
+                };
+                order.OrderItems.Add(orderItem);
+                total += (product.Price * cartItem.Quantity);
+            }
+            order.TotalAmount = total;
             _orderRepository.Add(order);
             _cartRepository.ClearCart(userId.Value);
             return RedirectToAction("History");

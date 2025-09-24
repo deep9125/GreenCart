@@ -51,7 +51,6 @@ namespace GreenCart.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderDate = table.Column<DateTime>(nullable: false),
                     TotalAmount = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
-                    Status = table.Column<int>(nullable: false),
                     ShippingAddress = table.Column<string>(nullable: true),
                     BuyerId = table.Column<int>(nullable: false)
                 },
@@ -126,6 +125,7 @@ namespace GreenCart.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Quantity = table.Column<int>(nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    Status = table.Column<int>(nullable: false),
                     OrderId = table.Column<int>(nullable: false),
                     ProductId = table.Column<int>(nullable: false)
                 },

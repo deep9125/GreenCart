@@ -25,18 +25,18 @@ namespace GreenCart.Repository
             }
             return cart;
         }
-        public void AddItem(int userId, int productId)
+        public void AddItem(int userId, int productId,int quantity)
         {
             var cart = GetByUserId(userId);
             var cartItem = cart.Items.FirstOrDefault(i => i.ProductId == productId);
             if (cartItem == null)
             {
-                cartItem = new CartItem { ProductId = productId, Quantity = 1 };
+                cartItem = new CartItem { ProductId = productId, Quantity = quantity };
                 cart.Items.Add(cartItem);
             }
             else
-            { 
-                cartItem.Quantity++;
+            {
+                cartItem.Quantity += quantity;
             }
             _context.SaveChanges();
         }

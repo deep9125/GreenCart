@@ -9,6 +9,7 @@ namespace GreenCart.Models
 
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
+        public OrderStatus Status { get; set; }
 
         // Foreign Keys for relationships
         public int OrderId { get; set; }

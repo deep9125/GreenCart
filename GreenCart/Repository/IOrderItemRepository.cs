@@ -7,5 +7,6 @@ namespace GreenCart.Repository
     {
         OrderItem? GetById(int id);
         IEnumerable<OrderItem> GetByOrderId(int orderId);
+        void Update(OrderItem item);
     }
 }

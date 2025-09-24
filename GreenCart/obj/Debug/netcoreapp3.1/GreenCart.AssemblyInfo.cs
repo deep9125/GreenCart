@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GreenCart")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8f89c17a71136a3d5d0430eee201d6ae6d6ccd6c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6d91055a764b0a3ac635dac67e7c27713ddda3f2")]
 [assembly: System.Reflection.AssemblyProductAttribute("GreenCart")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GreenCart")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

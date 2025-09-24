@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GreenCart.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250922193534_GreenCart")]
+    [Migration("20250924184742_GreenCart")]
     partial class GreenCart
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -112,9 +112,6 @@ namespace GreenCart.Migrations
                     b.Property<string>("ShippingAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18, 2)");
 
@@ -142,6 +139,9 @@ namespace GreenCart.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

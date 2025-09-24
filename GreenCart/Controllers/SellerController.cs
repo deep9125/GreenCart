@@ -4,17 +4,22 @@ using GreenCart.Repository;
 using GreenCart.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GreenCart.Controllers
 {
     public class SellerController : Controller
     {
+        private readonly AppDbContext _context;
         private readonly IProductRepository _productRepository;
         private readonly IOrderRepository _orderRepository;
-        public SellerController(IProductRepository productRepository, IOrderRepository orderRepository)
+        private readonly IOrderItemRepository _orderItemRepository;
+        public SellerController(AppDbContext context,IProductRepository productRepository, IOrderRepository orderRepository, IOrderItemRepository orderItemRepository)
         {
+            _context = context;
             _productRepository = productRepository;
             _orderRepository = orderRepository;
+            _orderItemRepository = orderItemRepository;
         }
         public IActionResult Dashboard()
         {
@@ -36,18 +41,19 @@ namespace GreenCart.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult UpdateOrderStatus(int orderId, OrderStatus status)
+        public IActionResult UpdateOrderStatus(int orderItemId, OrderStatus status)
         {
             var userId = HttpContext.Session.GetInt32("UserId");
             if (userId == null || HttpContext.Session.GetString("UserRole") != "Seller")
             {
                 return RedirectToAction("Login", "Account");
             }
-            var order = _orderRepository.GetById(orderId);
-            if (order != null && order.OrderItems.Any(oi => oi.Product.SellerId == userId.Value))
+            var orderItem = _orderItemRepository.GetById(orderItemId);
+            if (orderItem != null && orderItem.Product.SellerId == userId.Value)
             {
-                order.Status = status;
-                _orderRepository.Update(order);
+                orderItem.Status = status;
+                _orderItemRepository.Update(orderItem);
+                _context.SaveChanges();
             }
             return RedirectToAction("Dashboard");
         }

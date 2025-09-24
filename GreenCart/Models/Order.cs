@@ -12,7 +12,6 @@ namespace GreenCart.Models
 
         [Column(TypeName = "decimal(18, 2)")]
         public decimal TotalAmount { get; set; }
-        public OrderStatus Status { get; set; }
         public string ShippingAddress { get; set; }
 
         // Foreign Key for the buyer
