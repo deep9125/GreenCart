@@ -1,10 +1,8 @@
-﻿using System.Linq;
-using GreenCart.Models;
+﻿using GreenCart.Models;
 using GreenCart.Repository;
 using GreenCart.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace GreenCart.Controllers
 {

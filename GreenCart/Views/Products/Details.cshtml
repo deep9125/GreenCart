@@ -1,61 +1,77 @@
 ﻿@using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
-@model GreenCart.Models.Product
+@model GreenCart.ViewModels.MarketplaceProductViewModel
 @{
-    ViewData["Title"] = Model.Name;
+    ViewData["Title"] = Model.Product.Name;
 }
-<h1>@Model.Name</h1>
+@{
+    var userId = HttpContextAccessor.HttpContext.Session.GetInt32("UserId");
+    var userRole = HttpContextAccessor.HttpContext.Session.GetString("UserRole");
+}
+<h1>@Model.Product.Name</h1>
 <div>
     <hr />
     <div class="row">
         <div class="col-md-6">
-            <img src="@(Model.ImageUrl ?? "https://placehold.co/600x400/66cc99/FFFFFF?text=GreenCart")" alt="@Model.Name" class="img-fluid rounded shadow-sm" />
+            <img src="@(Model.Product.ImageUrl ?? "https://placehold.co/600x400/66cc99/FFFFFF?text=GreenCart")" alt="@Model.Product.Name" class="img-fluid rounded shadow-sm" />
         </div>
         <div class="col-md-6">
-            <h4>Sold by: @Model.Seller.FirstName</h4>
-            <p><strong>Category:</strong> @Model.Category</p>
-            <p>@Model.Description</p>
-            <h3 class="text-primary">@Model.Price.ToString("C")</h3>
-            <p>In Stock: @Model.StockQuantity</p>
-            <hr />
-            @{
-                var userId = HttpContextAccessor.HttpContext.Session.GetInt32("UserId");
-                var userRole = HttpContextAccessor.HttpContext.Session.GetString("UserRole");
-            }
-            @if (userRole == "Seller" && Model.SellerId == userId)
+            <h4>Sold by: @Model.Product.Seller.FirstName</h4>
+            <p><strong>Category:</strong> @Model.Product.Category</p>
+            <p>@Model.Product.Description</p>
+            <h3 class="text-primary">@Model.Product.Price.ToString("C")</h3>
+            @if (Model.Product.StockQuantity == 0)
             {
-                <div class="d-grid gap-2">
-                    <h5 class="text-muted">Seller Actions</h5>
-                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning btn-lg">
-                        <i class="bi bi-pencil-square"></i> Edit Listing
-                    </a>
-                    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger btn-lg">
-                        <i class="bi bi-trash"></i> Delete Listing
-                    </a>
-                    
-                </div>
+                <span class="badge bg-danger">Out of Stock</span>
+            }
+            else if (Model.Product.StockQuantity < 5)
+            {
+                <span class="badge bg-warning text-dark">Only @Model.Product.StockQuantity left!</span>
             }
             else
             {
-                <form asp-controller="Cart" asp-action="AddToCart" method="post">
-                    <input type="hidden" name="productId" value="@Model.Id" /> <div class="input-group">
-                        <input type="number" name="quantity" class="form-control" value="1" min="1" max="@Model.StockQuantity"> 
-                        <button type="submit" class="btn btn-success">
-                            <i class="bi bi-cart-plus"></i>
-                        </button>
-                    </div>
-                </form>
+                <span class="text-success">In Stock </span>
+                <span>Qty @Model.Product.StockQuantity</span>
             }
+            @if (Model.QuantityInCart >= 0 && userRole != "Seller" && userId != null)
+            {
+                <p class="text-info fw-bold">
+                    <i class="bi bi-cart-check-fill"></i> You have @Model.QuantityInCart in your cart.
+                </p>
+            }
+            <hr />
+            
+            @if (userRole == "Seller" && Model.Product.SellerId == userId)
+            {
+                <div class="d-grid gap-2">
+                    <h5 class="text-muted">Seller Actions</h5>
+                    <a asp-action="Edit" asp-route-id="@Model.Product.Id" class="btn btn-warning btn-lg">Edit Listing</a>
+                    <a asp-action="Delete" asp-route-id="@Model.Product.Id" class="btn btn-danger btn-lg">Delete Listing</a>
+                </div>
+            }
+            else if (userRole != "Seller") 
+            {
+                @if (Model.Product.StockQuantity > 0)
+                {
+                    <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                        <input type="hidden" name="productId" value="@Model.Product.Id" />
+                        <div class="input-group">
+                            <input type="number" name="quantity" class="form-control" value="1" min="1" max="@Model.Product.StockQuantity">
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-cart-plus"></i>
+                            </button>
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-success" disabled>
+                        <i class="bi bi-cart-plus"></i>
+                    </button>
+                }
+            }
+            <a asp-controller="Products" asp-action="Index" class="btn btn-outline-secondary">← Back to Marketplace</a>
+
         </div>
     </div>
-</div>
-<div class="mt-4">
-    @if (userRole == "Seller")
-    {
-        <a asp-controller="Seller" asp-action="Dashboard" class="btn btn-outline-secondary">← Back to My Dashboard</a>
-    }
-    else
-    {
-        <a asp-controller="Products" asp-action="Index" class="btn btn-outline-secondary">← Back to Marketplace</a>
-    }
 </div>

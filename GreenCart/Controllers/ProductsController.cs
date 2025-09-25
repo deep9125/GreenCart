@@ -1,31 +1,56 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using GreenCart.Repository;
+﻿using System.Linq;
+using AutoMapper;
 using GreenCart.Models;
+using GreenCart.Repository;
 using GreenCart.ViewModels;
 using Microsoft.AspNetCore.Http;
-using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GreenCart.Controllers
 {
     public class ProductsController : Controller
     {
         private readonly IProductRepository _productRepository;
+        private readonly ICartRepository _cartRepository;
         private readonly IMapper _mapper;
-        public ProductsController(IProductRepository productRepository, IMapper mapper)
+        public ProductsController(IProductRepository productRepository,ICartRepository cartRepository ,IMapper mapper)
         {
             _productRepository = productRepository;
+            _cartRepository = cartRepository;
             _mapper = mapper;
         }
         public IActionResult Index()
         {
             var products = _productRepository.GetAll();
-            return View(products);
+            var userId = HttpContext.Session.GetInt32("UserId");
+            Cart userCart = null;
+            if (userId != null)
+            {
+                userCart = _cartRepository.GetByUserId(userId.Value);
+            }
+            var viewModel = products.Select(p => new MarketplaceProductViewModel
+            {
+                Product = p,
+                QuantityInCart = userCart?.Items.FirstOrDefault(i => i.ProductId == p.Id)?.Quantity ?? 0
+            }).ToList();
+            return View(viewModel);
         }
         public IActionResult Details(int id)
         {
             var product = _productRepository.GetById(id);
             if (product == null) return NotFound();
-            return View(product);
+            var userId = HttpContext.Session.GetInt32("UserId");
+            Cart userCart = null;
+            if (userId != null)
+            {
+                userCart = _cartRepository.GetByUserId(userId.Value);
+            }
+            var viewModel = new MarketplaceProductViewModel 
+            {
+                Product= product,
+                QuantityInCart = userCart?.Items.FirstOrDefault(i => i.ProductId == product.Id)?.Quantity ?? 0
+            };
+            return View(viewModel);
         }
         public IActionResult Create()
         {

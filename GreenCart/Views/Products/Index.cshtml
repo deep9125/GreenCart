@@ -1,78 +1,91 @@
 ﻿@using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
-@model IEnumerable<GreenCart.Models.Product>
+@model IEnumerable<GreenCart.ViewModels.MarketplaceProductViewModel>
 @{
     ViewData["Title"] = "Marketplace";
 }
+
 <h1>Marketplace</h1>
+
 @{
     var userRole = HttpContextAccessor.HttpContext.Session.GetString("UserRole");
+    var userId = HttpContextAccessor.HttpContext.Session.GetInt32("UserId");
 }
-@if (userRole == "Seller")
+@if (TempData["ErrorMessage"] != null)
 {
-    <div class="alert alert-info" role="alert">
-        <h4 class="alert-heading">This is the Buyer's Marketplace!</h4>
-        <p>This page is for customers to browse and shop. To manage your own products, please go to your personal dashboard.</p>
-        <hr>
-        <a class="btn btn-info" asp-controller="Seller" asp-action="Dashboard">Go to My Seller Dashboard</a>
-    </div>
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
 }
-else
-{
-    <p>Browse all the unique products from our talented creators.</p>
-    <hr />
+<p>Browse all the unique products from our talented creators.</p>
+<hr />
 
-    <div class="row">
-        @foreach (var item in Model)
-        {
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <img src="@(item.ImageUrl ?? "https://placehold.co/600x400/66cc99/FFFFFF?text=GreenCart")" class="card-img-top" style="height:200px; object-fit:cover;" alt="@item.Name">
-                    <div class="card-body">
-                        <h5 class="card-title">@item.Name</h5>
-                        <p class="card-text"><strong>@item.Price.ToString("C")</strong></p>
-                        <p class="card-text"><small class="text-muted">Sold by: @item.Seller.FirstName</small></p>
-                        <div>
-                            @if (item.StockQuantity == 0)
-                            {
-                                <span class="badge bg-danger">Out of Stock</span>
-                            }
-                            else if (item.StockQuantity < 5)
-                            {
-                                <span class="badge bg-warning text-dark">Only @item.StockQuantity left!</span>
-                            }
-                            else
-                            {
-                                <span class="text-success">In Stock</span>
-                                <span class="text-success">@item.StockQuantity </span>
-                            }
-                        </div>
-                    </div>
-                    <div class="card-footer bg-transparent border-top-0">
-                        <div class="d-flex justify-content-between align-items-center">
-                            @if (item.StockQuantity > 0)
-                            {
-                                <form asp-controller="Cart" asp-action="AddToCart" method="post">
-                                    <input type="hidden" name="productId" value="@item.Id" /> 
-                                    <div class="input-group">
-                                        <input type="number" name="quantity" class="form-control" value="1" min="1" max="@item.StockQuantity">
-                                        <button type="submit" class="btn btn-success">
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Product.Name</h5>
+                    <p class="card-text"><strong>@item.Product.Price.ToString("C")</strong></p>
+                    <p class="card-text"><small class="text-muted">Sold by: @item.Product.Seller.FirstName</small></p>
+                        @if (item.Product.StockQuantity == 0)
+                        {
+                            <span class="badge bg-danger">Out of Stock</span>
+                        }
+                        else if (item.Product.StockQuantity < 5)
+                        {
+                            <span class="badge bg-warning text-dark">Only @item.Product.StockQuantity left!</span>
+                        }
+                        else
+                        {
+                            <span class="text-success">In Stock </span>
+                            <span>Qty @item.Product.StockQuantity</span>
+                        }
+                    @if (item.QuantityInCart >= 0 && userRole != "Seller" && userId != null)
+                    {
+                        <p class="text-info fw-bold">
+                            <i class="bi bi-cart-check-fill"></i> You have @item.QuantityInCart in your cart.
+                        </p>
+                    }
+
+                </div>
+                <div class="card-footer bg-transparent border-top-0">
+                    <div class="d-flex justify-content-between align-items-center">
+                        @if (userId != null && item.Product.SellerId == userId.Value)
+                        {
+                            <div>
+                                <a asp-action="Edit" asp-route-id="@item.Product.Id" class="btn btn-sm btn-outline-warning">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@item.Product.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                            </div>
+                        }
+                        else if (userRole != "Seller" ) 
+                        {
+                            <div class="card-footer bg-transparent border-top-0">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    @if (item.Product.StockQuantity > 0 )
+                                    {
+                                        <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                                            <input type="hidden" name="productId" value="@item.Product.Id" />
+                                            <div class="input-group">
+                                                <input type="number" name="quantity" class="form-control" value="1" min="1" max="@item.Product.StockQuantity">
+                                                <button type="submit" class="btn btn-success">
+                                                    <i class="bi bi-cart-plus"></i>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="btn btn-success" disabled>
                                             <i class="bi bi-cart-plus"></i>
                                         </button>
-                                    </div>
-                                </form>
-                            }
-                            else
-                            {
-                                <button type="button" class="btn btn-sm btn-secondary" disabled>
-                                    Add to Cart
-                                </button>
-                            }
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">Details</a>
-                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        <a asp-action="Details" asp-route-id="@item.Product.Id" class="btn btn-sm btn-outline-info">Details</a>
                     </div>
                 </div>
             </div>
-        }
-    </div>
-}
+        </div>
+    }
+</div>

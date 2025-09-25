@@ -1,8 +1,6 @@
 ﻿using System.Linq;
 using GreenCart.Models;
 using GreenCart.Repositories;
-using Microsoft.EntityFrameworkCore;
-
 namespace GreenCart.Repository
 {
     public class UserRepository : IUserRepository

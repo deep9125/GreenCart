@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Text.Json;
-using GreenCart.Models;
+﻿using System.Linq;
 using GreenCart.Repository;
-using GreenCart.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,9 +8,11 @@ namespace GreenCart.Controllers
     public class CartController : Controller
     {
         private readonly ICartRepository _cartRepository;
-        public CartController(ICartRepository cartRepository)
+        private readonly IProductRepository _productRepository;
+        public CartController(ICartRepository cartRepository, IProductRepository productRepository)
         {
             _cartRepository = cartRepository;
+            _productRepository = productRepository;
         }
         public IActionResult Index()
         {
@@ -33,7 +32,20 @@ namespace GreenCart.Controllers
             if (userId == null) return RedirectToAction("Login", "Account");
             if (quantity < 1)
             {
-                quantity = 1; 
+                quantity = 1;
+            }
+            var product = _productRepository.GetById(productId);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            var cart = _cartRepository.GetByUserId(userId.Value);
+            var existingCartItem = cart.Items.FirstOrDefault(i => i.ProductId == productId);
+            int quantityAlreadyInCart = existingCartItem?.Quantity ?? 0;
+            if ((quantityAlreadyInCart + quantity) > product.StockQuantity)
+            {
+                TempData["ErrorMessage"] = $"You can't add {quantity} unit(s) of '{product.Name}'. Only {product.StockQuantity - quantityAlreadyInCart} more are available.";
+                return RedirectToAction("index", "Products");
             }
             _cartRepository.AddItem(userId.Value, productId, quantity);
             return RedirectToAction("Index", "Products");
